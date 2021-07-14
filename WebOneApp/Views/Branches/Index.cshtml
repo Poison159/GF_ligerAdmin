@@ -1,0 +1,55 @@
+﻿@model IEnumerable<WebOneApp.Models.Branch>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Branches</h2>
+@if (User.IsInRole("Admin")) {
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+}
+
+<hr />
+
+@foreach (var item in Model)
+{
+    <div class="card">
+        <h4>
+            @item.resturant.name - @item.name | @for (int i = 0; i < item.rating; i++)
+            {<span class="glyphicon glyphicon-star yellow"></span>}
+        </h4>
+        <div class="card-body">
+            <div class="row">
+                <div class="col-md-3">
+                    @item.address
+                </div>
+                <div class="col-md-2">
+                    @ViewBag.names[item.userId]
+                </div>
+                <div class="col-md-1">
+                    @item.guid
+                </div>
+                <div class="col-md-2">
+                    @item.contactNumber
+                </div>
+                <div class="col-md-3">
+                    @if(User.IsInRole("Admin")){
+                        <div>
+                            @Html.ActionLink("Edit", "Edit", new { id = item.id })
+                        </div>
+                        <div>
+                            @Html.ActionLink("Delete", "Delete", new { id = item.id })
+                        </div>
+                    }
+                    <div>
+                        @Html.ActionLink("Details", "Details", new { id = item.id })
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <hr />
+}

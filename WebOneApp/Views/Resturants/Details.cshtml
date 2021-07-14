@@ -1,0 +1,110 @@
+﻿@model WebOneApp.Models.Resturant
+
+@{
+    ViewBag.Title = "Details";
+}
+
+    <div style="background-image:url(@Model.imgPath);background-size: cover;background-position: center center;"  class="jumbotron jumbotron-fluid">
+        <div style="height:150px;" class="container">
+            <h1 style="color:black" class="display-4"></h1>
+        </div>
+    </div>
+@if (User.IsInRole("Admin"))
+{
+    <p>
+        @Html.ActionLink("Add Meal", "AddMeal", new { resId = Model.id }) |
+        @Html.ActionLink("Edit", "Edit", new { id = Model.id }) |
+    </p>
+}
+@{
+    int counter = 0;
+    var tabActive = "";
+ }
+
+    
+<div class="row">
+    <ul class="nav nav-tabs">
+        @foreach (var meal in Model.meals)
+        {
+            if (counter == 0)
+            {
+                tabActive = "active";
+            }
+            else
+            {
+                tabActive = "";
+            }
+            <li class="@tabActive"><a data-toggle="tab" href="#@meal.Key.Replace(" ", String.Empty).Trim()">@meal.Key</a></li>
+            counter++;
+        }
+    </ul>
+    <div class="tab-content">
+        @{
+            counter = 0;
+        }
+        @foreach (var meal in Model.meals)
+        {
+
+            if (counter == 0)
+            {
+                tabActive = "active";
+            }
+            else
+            {
+                tabActive = "";
+            }
+            <div id="@meal.Key.Replace(" ", String.Empty).Trim()" class="tab-pane fade in @tabActive">
+                @foreach (var item in meal.Value)
+                {
+                    <div class="col-sm-3">
+                        <div class="card bg-light" style="width:100%;height:300PX;">
+                            <img style="width: 150px;height: 150px" class="card-img-top" src=@item.imgPath alt="Card image">
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <h4>@item.name</h4>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <p>@item.price</p>
+                                    </div>
+                                </div>
+                                <p class="text-wrap" style="word-wrap: break-word;">@item.description</p>
+
+                                @if (User.IsInRole("Admin"))
+                                {
+                                    <div class="row">
+                                        <div class="col-md-2">
+                                            <a class="btn btn-primary" href="@Url.Action("EditMeal", new { id = item.id, restId = item.resturantId })">Edit</a>
+                                        </div>
+                                        <div class="col-md-2">
+                                            <a class="btn btn-primary" href="@Url.Action("Delete", "Meals", new { id = item.id })">Delete</a>
+                                        </div>
+                                    </div>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+            counter++;
+          }
+        </div>
+    </div>
+    <br />
+    <br />
+    <br />
+    <p>
+        @Html.ActionLink("Back to List", "Index")
+    </p>
+    <script src="~/Scripts/jquery-3.4.1.js"></script>
+    <script>
+        jQuery(document).ready(function ($) {
+            var panels = $('.accordion > dd').hide();
+            $('.accordion > dt > a').click(function () {
+                var $this = $(this);
+                panels.slideUp();
+                $this.parent().next().slideDown();
+                return false;
+            });
+        });
+    </script>

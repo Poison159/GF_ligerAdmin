@@ -1,0 +1,60 @@
+﻿
+@{
+    ViewBag.Title = "AddManager";
+}
+
+<h2>Add Manager</h2>
+<form>
+    <div class="form-group row">
+        <label for="staticEmail" class="col-sm-2 col-form-label">Email</label>
+        <div class="col-sm-10"> 
+            <input type="text" class="form-control" name="email" placeholder="email@example.com">
+        </div>
+    </div>
+    <div class="form-group row">
+        <label for="inputPassword" class="col-sm-2 col-form-label">Password</label>
+        <div class="col-sm-10">
+            <input type="password" name="Password" class="form-control" placeholder="Password">
+        </div>
+    </div>
+    <div class="form-group row">
+        <label for="confirmPassword" class="col-sm-2 col-form-label">Confirm Password</label>
+        <div class="col-sm-10">
+            <input type="password" name="confirmPassword" class="form-control" id="inputPassword" placeholder="Password">
+        </div>
+    </div>
+    <button id="submitButton" type="submit" class="btn btn-primary">Submit</button>
+</form>
+<script src="~/Scripts/jquery-3.4.1.min.js"></script>
+<script>
+    $('#submitButton').on('click', function(e){
+        e.preventDefault();
+        var baseUrl = 'https://weboneapp.conveyor.cloud/api/';
+		var formData = $('form').serialize();
+        var email = formData.split('&')[1].split('=')[1].replace(/%40/g, "@@");
+        var password = formData.split('&')[2].split('=')[1].replace(new RegExp("\\+","g"),' ');
+        var confirmPassword = formData.split('&')[3].split('=')[1].replace(new RegExp("\\+", "g"), ' ');
+        if (password !== confirmPassword) {
+            alert("passwords do not match")
+        } else {
+            $.ajax({
+			type: 'POST',
+			url: baseUrl +'AddManager',
+			data: { 
+                'email': email,
+                'password': password,
+                'confirmPassword': confirmPassword,
+                'role': "Manager"
+			},
+			success: function(res){
+				document.location.href="/resturants";
+			},
+			error: function(res){
+				$('#replace').html( "<h4 style='margin:auto;'>" + res + "</h4>");
+			}
+		});
+        }
+	});
+
+
+</script>

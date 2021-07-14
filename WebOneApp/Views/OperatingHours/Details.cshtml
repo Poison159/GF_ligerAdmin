@@ -1,0 +1,50 @@
+﻿@model WebOneApp.Models.OperatingHours
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>OperatingHours</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.branchId)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.branchId)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.day)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.day)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.openingHour)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.openingHour)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.closingHour)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.closingHour)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.id }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

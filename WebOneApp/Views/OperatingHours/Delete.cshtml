@@ -1,0 +1,56 @@
+﻿@model WebOneApp.Models.OperatingHours
+
+@{
+    ViewBag.Title = "Delete";
+}
+
+<h2>Delete</h2>
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <h4>OperatingHours</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.branchId)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.branchId)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.day)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.day)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.openingHour)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.openingHour)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.closingHour)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.closingHour)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Delete" class="btn btn-default" /> |
+            @Html.ActionLink("Back to List", "Index")
+        </div>
+    }
+</div>

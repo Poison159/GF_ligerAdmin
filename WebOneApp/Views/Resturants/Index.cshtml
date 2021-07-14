@@ -1,0 +1,42 @@
+﻿@model IEnumerable<WebOneApp.Models.Resturant>
+
+@{
+    ViewBag.Title = "Index";
+}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+@if (User.IsInRole("Admin"))
+{
+    <p>
+        @Html.ActionLink("Create New", "Create")
+    </p>
+}
+
+<div class="row">
+    <br />
+    <br />
+    @foreach (var item in Model)
+    {
+        <div class="col-md-4">
+            <div class="card" style="width:320px;height:300px;">
+                <img style="width:250px;height:150px" class="card-img-top" src=@item.imgPath alt="Card image">
+                <div class="card-body">
+                    <h4>@item.name</h4>
+                    <div class="row">
+                        @if (User.IsInRole("Admin"))
+                        {
+                            <div class="col-md-2 btn btn-primary">
+                                @Html.ActionLink("Edit", "Edit", new { id = item.id })
+                            </div>
+                            <div class="col-md-2 btn btn-primary">
+                                @Html.ActionLink("Delete", "Delete", new { id = item.id })
+                            </div>
+                        }
+                        <div class="col-md-3 btn btn-primary">
+                            @Html.ActionLink("Details", "Details", new { id = item.id })
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+</div>
